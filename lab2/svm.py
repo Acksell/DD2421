@@ -76,9 +76,14 @@ if __name__ == "__main__":
     np.random.seed(100)
     random.seed(100)
 
+    # kernel = linear_kernel
+    # kernel = get_poly_kernel(10)
+    kernel = get_radial_kernel(0.5)
+    C=None
+
     #### Generate dataset
     classA = np.concatenate(
-      (np.random.randn(10, 2)*0.2 + [1.5, 0.5], np.random.randn(10, 2)*0.2 + [-1.5, 0.5])
+      (np.random.randn(10, 2)*0.2 + [-1.5, 0.5], np.random.randn(10, 2)*0.2 + [1.5, 0.5])
     )
     classB = np.random.randn(20, 2)*0.2 + [0.0, -0.5]
 
@@ -109,16 +114,11 @@ if __name__ == "__main__":
     plt.axis('equal') # Force same scale on both axes
 
     #### Set up and solve optimisation problem.
-    C=None
     bounds=[(0, C) for b in range(N)]  # makes sure that 0 <= alpha_i <= C. 
     start = np.zeros(N)  # start guess of alpha vector.
 
     # alphas.dot(targets) == 0
     constraint={'type':'eq', 'fun':getZerofun(targets)}
-
-    # kernel = linear_kernel
-    # kernel = get_poly_kernel(3)
-    kernel = get_radial_kernel(1)
 
     ret = minimize(getObjectiveFunction(inputs, targets, kernel), start, bounds=bounds, constraints=constraint)
     if ret['success']:
@@ -144,3 +144,4 @@ if __name__ == "__main__":
         plt.show()
     else:
         print("Failed to find a solution.")
+        plt.show()
