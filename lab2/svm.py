@@ -107,7 +107,6 @@ if __name__ == "__main__":
       'r.'
     )
     plt.axis('equal') # Force same scale on both axes
-    plt.savefig('svmplot.pdf') # Save a copy in a file
 
     #### Set up and solve optimisation problem.
     C=None
@@ -141,6 +140,7 @@ if __name__ == "__main__":
           colors=('red', 'black', 'blue'),
           linewidths=(1 , 3 , 1)
         )
+        plt.savefig('svmplot.pdf') # Save a copy in a file
         plt.show()
     else:
         print("Failed to find a solution.")
